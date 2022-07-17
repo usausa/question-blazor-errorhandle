@@ -1,0 +1,15 @@
+﻿<PageTitle>Server Error</PageTitle>
+
+<h1>Server Error</h1>
+
+<pre>@Exception?.ToString()</pre>
+
+<button @onclick="() => RecoverRequest.InvokeAsync()">Recovery</button>
+
+@code {
+    [Parameter]
+    public Exception? Exception { get; set; }
+
+    [Parameter]
+    public EventCallback RecoverRequest { get; set; }
+}

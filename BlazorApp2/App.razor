@@ -1,7 +1,16 @@
 ﻿<Router AppAssembly="@typeof(App).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        <ErrorBoundary @ref="errorBoundary">
+            <ChildContent>
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+                <FocusOnNavigate RouteData="@routeData" Selector="h1"/>
+            </ChildContent>
+            <ErrorContent>
+                <LayoutView Layout="typeof(ErrorLayout)">
+                    <Error500 Exception="@context" RecoverRequest="() => errorBoundary?.Recover()"/>
+                </LayoutView>
+            </ErrorContent>
+        </ErrorBoundary>
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
@@ -10,3 +19,14 @@
         </LayoutView>
     </NotFound>
 </Router>
+
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        // Not called when navigation or browser back
+        System.Diagnostics.Debug.WriteLine("**** OnParametersSet App ****");
+        //errorBoundary?.Recover();
+    }
+}
