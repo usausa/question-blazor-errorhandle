@@ -4,6 +4,11 @@
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+<button @onclick="OnErrorCallback">Error</button>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private void OnErrorCallback()
+    {
+        throw new Exception("Test");
+    }
+}
