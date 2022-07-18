@@ -1,0 +1,34 @@
+﻿@inherits LayoutComponentBase
+
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu />
+            </div>
+
+            <main>
+                <div class="top-row px-4">
+                    <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                </div>
+
+                <article class="content px-4">
+                    @Body
+                </article>
+            </main>
+        </div>
+    </ChildContent>
+    <ErrorContent>
+        <Error500 Exception="@context" RecoverRequest="() => errorBoundary?.Recover()"/>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        System.Diagnostics.Debug.WriteLine("**** OnParametersSet MainLayout ****");
+        errorBoundary?.Recover();
+    }
+}
